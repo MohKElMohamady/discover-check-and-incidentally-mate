@@ -1,10 +1,9 @@
 package com.discover.check.and.incidentally.mate.pieces;
 
 import com.discover.check.and.incidentally.mate.board.Board;
-import com.discover.check.and.incidentally.mate.board.Move;
+import com.discover.check.and.incidentally.mate.board.moves.Move;
 
 import java.util.Collection;
-import java.util.List;
 
 public abstract class Piece {
     protected final int piecePosition;
