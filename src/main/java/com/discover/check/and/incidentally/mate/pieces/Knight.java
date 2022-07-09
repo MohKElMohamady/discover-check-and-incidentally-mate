@@ -1,6 +1,7 @@
 package com.discover.check.and.incidentally.mate.pieces;
 
 import com.discover.check.and.incidentally.mate.board.Board;
+import com.discover.check.and.incidentally.mate.board.BoardUtils;
 import com.discover.check.and.incidentally.mate.board.Move;
 import com.discover.check.and.incidentally.mate.board.Tile;
 import com.google.common.collect.ImmutableList;
@@ -21,16 +22,23 @@ public class Knight extends Piece{
 
     @Override
     public List<Move> calculateLegalMoves(Board board) {
-        int candidateDestinationCoordinate;
         List<Move> legalMoves = new ArrayList<>();
         /*
          * For each legal move by the knight, we will add the current position of the knight to it, and we will see if
          * the tile is actually on the board and after that check if the tile is occupied or not
          */
-        for(final int currentCandidate : CANDIDATE_LEGAL_MOVES){
-            candidateDestinationCoordinate = this.piecePosition + currentCandidate;
-            if(true /* TODO: Add checking if this is a valid tile coordinate */){
-               /*
+        for(final int currentCandidateOffset : CANDIDATE_LEGAL_MOVES){
+            final int candidateDestinationCoordinate = this.piecePosition + currentCandidateOffset;
+            /*
+             * We have to check if the knight lies on the first, second, sixth or seventh column
+             */
+            if(BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)){
+                if(isFirstColumnExclusion(this.piecePosition, currentCandidateOffset) ||
+                        isSecondColumnExclusion(this.piecePosition, currentCandidateOffset) ||
+                        isSixthColumnExclusion(this.piecePosition, currentCandidateOffset) ||
+                        isSeventhColumnExclusion(this.piecePosition, currentCandidateOffset))
+                    continue;
+                /*
                 * If we do not go out of the board and the destination tile is valid, we will fetch the tile from the
                 * board
                 */
@@ -64,5 +72,29 @@ public class Knight extends Piece{
             }
         }
         return ImmutableList.copyOf(legalMoves);
+    }
+
+    /**
+     * There are some tiles on which the knight be present on it, adding the offset would lead to a wrong tile which are
+     * First, Second, Sixth and Seventh Column
+     */
+    private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset){
+        return BoardUtils.FIRST_COLUMN[currentPosition] && (candidateOffset == -17 || candidateOffset == -10 ||
+                candidateOffset == 6 || candidateOffset == 15);
+    }
+
+    private static boolean isSecondColumnExclusion(final int currentPosition, final int candidateOffset){
+        return BoardUtils.SECOND_COLUMN[currentPosition] && (candidateOffset == -17 || candidateOffset == -10 ||
+                candidateOffset == 6 || candidateOffset == 15);
+    }
+
+    private static boolean isSixthColumnExclusion(final int currentPosition, final int candidateOffset){
+        return BoardUtils.SIXTH_COLUMN[currentPosition] && (candidateOffset == -17 || candidateOffset == -10 ||
+                candidateOffset == 6 || candidateOffset == 15);
+    }
+
+    private static boolean isSeventhColumnExclusion(final int currentPosition, final int candidateOffset){
+        return BoardUtils.SEVENTH_COLUMN[currentPosition] && (candidateOffset == -17 || candidateOffset == -10 ||
+                candidateOffset == 6 || candidateOffset == 15);
     }
 }

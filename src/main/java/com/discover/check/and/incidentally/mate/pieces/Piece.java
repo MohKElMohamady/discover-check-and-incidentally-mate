@@ -3,6 +3,7 @@ package com.discover.check.and.incidentally.mate.pieces;
 import com.discover.check.and.incidentally.mate.board.Board;
 import com.discover.check.and.incidentally.mate.board.Move;
 
+import java.util.Collection;
 import java.util.List;
 
 public abstract class Piece {
@@ -20,5 +21,5 @@ public abstract class Piece {
     public Alliance getPieceAlliance() {
         return pieceAlliance;
     }
-    public abstract List<Move> calculateLegalMoves(final Board board);
+    public abstract Collection<Move> calculateLegalMoves(final Board board);
 }
