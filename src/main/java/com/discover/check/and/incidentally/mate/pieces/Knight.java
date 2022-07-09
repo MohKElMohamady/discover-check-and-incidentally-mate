@@ -2,7 +2,9 @@ package com.discover.check.and.incidentally.mate.pieces;
 
 import com.discover.check.and.incidentally.mate.board.Board;
 import com.discover.check.and.incidentally.mate.board.BoardUtils;
-import com.discover.check.and.incidentally.mate.board.Move;
+import com.discover.check.and.incidentally.mate.board.moves.AttackMove;
+import com.discover.check.and.incidentally.mate.board.moves.MajorMove;
+import com.discover.check.and.incidentally.mate.board.moves.Move;
 import com.discover.check.and.incidentally.mate.board.Tile;
 import com.google.common.collect.ImmutableList;
 
@@ -49,9 +51,8 @@ public class Knight extends Piece{
                 if(!candidateDestinationTile.isTileOccupied()){
                     /*
                      * If it is not occupied, we need to return a move that will let the piece move on that tile
-                     * TODO: Add the move to change the position of that piece to another tile
                      */
-                    legalMoves.add(new Move());
+                    legalMoves.add(new MajorMove(board, this, candidateDestinationCoordinate));
                 }
                 /*
                  * If it is occupied, we need to check if the piece on that tile will is of the same alliance as this
@@ -64,9 +65,8 @@ public class Knight extends Piece{
                        /*
                         * This move should be responsible for taking out the other piece since they are of different
                         * alliance
-                        * TODO: Add the move to take out the other piece of different alliance present on the occupied tile
                         */
-                       legalMoves.add(new Move());
+                       legalMoves.add(new AttackMove(board, this, candidateDestinationCoordinate, pieceOnOccupiedTile));
                    }
                 }
             }
