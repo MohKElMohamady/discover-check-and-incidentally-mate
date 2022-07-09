@@ -17,5 +17,8 @@ public abstract class Piece {
     /**
      * Calculates the possible list of moves for a piece, will be unique for each piece
      */
+    public Alliance getPieceAlliance() {
+        return pieceAlliance;
+    }
     public abstract List<Move> calculateLegalMoves(final Board board);
 }
